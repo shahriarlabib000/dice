@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://band0ndenoxwb"]
+
+[ext_resource type="Texture2D" uid="uid://b5slp0xai2fa8" path="res://dice.png" id="1_qn1qw"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_o4jd6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_se17j"]
+albedo_texture = ExtResource("1_qn1qw")
+
+[sub_resource type="BoxMesh" id="BoxMesh_7x7d5"]
+material = SubResource("StandardMaterial3D_se17j")
+
+[node name="dice" type="RigidBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_o4jd6")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_7x7d5")
+
+[node name="rays" type="Node3D" parent="."]
+
+[node name="1" type="RayCast3D" parent="rays"]
+target_position = Vector3(0, 0, -1)
+
+[node name="4" type="RayCast3D" parent="rays"]
+target_position = Vector3(1, 0, 0)
+
+[node name="3" type="RayCast3D" parent="rays"]
+target_position = Vector3(0, 0, 1)
+
+[node name="2" type="RayCast3D" parent="rays"]
+target_position = Vector3(-1, 0, 0)
+
+[node name="5" type="RayCast3D" parent="rays"]
+
+[node name="6" type="RayCast3D" parent="rays"]
+target_position = Vector3(0, 1, 0)

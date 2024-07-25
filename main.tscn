@@ -1,0 +1,88 @@
+[gd_scene load_steps=6 format=3 uid="uid://bg86sypktf3ft"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_tts7u"]
+[ext_resource type="PackedScene" uid="uid://band0ndenoxwb" path="res://dice.tscn" id="2_h2ix6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1i6y"]
+albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_thd4j"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_n0xov"]
+
+[node name="main" type="Node3D"]
+script = ExtResource("1_tts7u")
+
+[node name="floor" type="CSGBox3D" parent="." groups=["floor"]]
+use_collision = true
+size = Vector3(100, 1, 100)
+material = SubResource("StandardMaterial3D_i1i6y")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 6, 0)
+
+[node name="dice" parent="." instance=ExtResource("2_h2ix6")]
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06025, 0)
+size = Vector3(30, 50, 30)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGCombiner3D"]
+operation = 2
+size = Vector3(28, 49, 28)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 6.32995, 0)
+shadow_enabled = true
+omni_range = 100.0
+
+[node name="number" type="Label" parent="."]
+offset_left = 300.0
+offset_top = 300.0
+offset_right = 615.0
+offset_bottom = 642.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 100
+text = "shikanoko
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="RollNode" type="Node2D" parent="CanvasLayer"]
+position = Vector2(1813, 824)
+
+[node name="Roll" type="TouchScreenButton" parent="CanvasLayer/RollNode"]
+self_modulate = Color(0.0627451, 0.0627451, 0.0627451, 1)
+scale = Vector2(256, 256)
+texture_normal = SubResource("CanvasTexture_thd4j")
+action = "ui_accept"
+
+[node name="Label" type="Label" parent="CanvasLayer/RollNode"]
+offset_right = 256.0
+offset_bottom = 254.0
+text = "Roll"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="goneNode" type="Node2D" parent="CanvasLayer"]
+position = Vector2(0, 50)
+
+[node name="gone" type="TouchScreenButton" parent="CanvasLayer/goneNode"]
+self_modulate = Color(0.32074, 0.343239, 0.325266, 1)
+scale = Vector2(300, 50)
+texture_normal = SubResource("CanvasTexture_n0xov")
+
+[node name="Label" type="Label" parent="CanvasLayer/goneNode"]
+offset_right = 301.0
+offset_bottom = 50.0
+text = "Dice gone?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="CanvasLayer/goneNode/gone" to="." method="_on_gone_pressed"]
