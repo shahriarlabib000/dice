@@ -1,10 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://bg86sypktf3ft"]
+[gd_scene load_steps=10 format=3 uid="uid://bg86sypktf3ft"]
 
 [ext_resource type="Script" path="res://main.gd" id="1_tts7u"]
 [ext_resource type="PackedScene" uid="uid://band0ndenoxwb" path="res://dice.tscn" id="2_h2ix6"]
+[ext_resource type="AudioStream" uid="uid://d1keuvejbkft2" path="res://thud.wav" id="3_s2wgb"]
+[ext_resource type="Texture2D" uid="uid://cr2adcer0nvpr" path="res://noDice.png" id="4_t1jps"]
+[ext_resource type="AudioStream" uid="uid://nhvi0kjlod5f" path="res://boom.mp3" id="5_sh715"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1i6y"]
 albedo_color = Color(0, 0, 0, 1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tufw5"]
 
 [sub_resource type="CanvasTexture" id="CanvasTexture_thd4j"]
 
@@ -13,7 +18,7 @@ albedo_color = Color(0, 0, 0, 1)
 [node name="main" type="Node3D"]
 script = ExtResource("1_tts7u")
 
-[node name="floor" type="CSGBox3D" parent="." groups=["floor"]]
+[node name="floor" type="CSGBox3D" parent="." groups=["floor", "wall"]]
 use_collision = true
 size = Vector3(100, 1, 100)
 material = SubResource("StandardMaterial3D_i1i6y")
@@ -23,10 +28,18 @@ transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 6, 0)
 
 [node name="dice" parent="." instance=ExtResource("2_h2ix6")]
 
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="dice"]
+stream = ExtResource("3_s2wgb")
+
+[node name="Area3D" type="Area3D" parent="dice"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="dice/Area3D"]
+shape = SubResource("BoxShape3D_tufw5")
+
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 use_collision = true
 
-[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D"]
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGCombiner3D" groups=["wall"]]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.06025, 0)
 size = Vector3(30, 50, 30)
 
@@ -77,6 +90,7 @@ position = Vector2(0, 50)
 self_modulate = Color(0.32074, 0.343239, 0.325266, 1)
 scale = Vector2(300, 50)
 texture_normal = SubResource("CanvasTexture_n0xov")
+action = "gone"
 
 [node name="Label" type="Label" parent="CanvasLayer/goneNode"]
 offset_right = 301.0
@@ -85,4 +99,24 @@ text = "Dice gone?"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[connection signal="pressed" from="CanvasLayer/goneNode/gone" to="." method="_on_gone_pressed"]
+[node name="img" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -512.0
+offset_top = -512.0
+offset_right = 512.0
+offset_bottom = 512.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = ExtResource("4_t1jps")
+
+[node name="boom" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_sh715")
+
+[connection signal="body_entered" from="dice/Area3D" to="." method="_on_area_3d_body_entered"]

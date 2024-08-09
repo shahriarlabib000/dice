@@ -22,6 +22,13 @@ window/size/viewport_height=1080
 window/stretch/mode="canvas_items"
 window/stretch/aspect="ignore"
 
+[input]
+
+gone={
+"deadzone": 0.5,
+"events": []
+}
+
 [physics]
 
 common/physics_ticks_per_second=200
