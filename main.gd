@@ -29,9 +29,9 @@ func _physics_process(_delta):
 	for Ray:RayCast3D in $dice/rays.get_children():
 		if Ray.is_colliding():
 			if Ray.get_collider().is_in_group("floor"):
-				$number.text= Ray.name
+				%number.text= Ray.name
 
 
 func _on_area_3d_body_entered(body):
 	if body.is_in_group("wall"):
-		$dice/AudioStreamPlayer3D.play()
+		%AudioStreamPlayer3D.play()
