@@ -8,10 +8,18 @@ func _ready():
 	$dice.apply_torque($dice.basis.y * randi_range(-6000,6000))
 	$dice.apply_torque($dice.basis.z * randi_range(-4600,4600))
 
-
+var use_cam_lookat := true
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(_delta):
-	$Camera3D.look_at($dice.position)
+	if use_cam_lookat:
+			$Camera3D.look_at($dice.position)
+	if Input.is_action_just_pressed("ui_accept"):
+		if randi_range(1,6) == 5:
+			use_cam_lookat = false
+			%job_application.global_position = %jobSpawn.global_position
+			%job_application.global_basis = $Camera3D.global_basis
+			await %job_application.animate( %finPos.global_position)
+			use_cam_lookat = true
 	if Input.is_action_pressed("ui_accept"):
 		$dice.apply_torque($dice.basis.x * randi_range(-500,500))
 		$dice.apply_torque($dice.basis.y * randi_range(-600,600))

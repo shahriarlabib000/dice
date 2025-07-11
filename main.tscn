@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://bg86sypktf3ft"]
+[gd_scene load_steps=11 format=3 uid="uid://bg86sypktf3ft"]
 
 [ext_resource type="Script" uid="uid://blgrpkr0ilnug" path="res://main.gd" id="1_tts7u"]
 [ext_resource type="PackedScene" uid="uid://band0ndenoxwb" path="res://dice.tscn" id="2_h2ix6"]
 [ext_resource type="AudioStream" uid="uid://d1keuvejbkft2" path="res://thud.wav" id="3_s2wgb"]
 [ext_resource type="Texture2D" uid="uid://cr2adcer0nvpr" path="res://noDice.png" id="4_t1jps"]
 [ext_resource type="AudioStream" uid="uid://nhvi0kjlod5f" path="res://boom.mp3" id="5_sh715"]
+[ext_resource type="PackedScene" uid="uid://cg3taamwxkxi" path="res://job_application.tscn" id="6_7mycd"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i1i6y"]
 albedo_color = Color(0.39507592, 0.39507598, 0.39507592, 1)
@@ -25,6 +26,19 @@ material = SubResource("StandardMaterial3D_i1i6y")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1.19249e-08, 1, 0, -1, 1.19249e-08, 0, 6, 0)
+
+[node name="jobSpawn" type="Marker3D" parent="Camera3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -20)
+
+[node name="job_application" parent="Camera3D/jobSpawn" instance=ExtResource("6_7mycd")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1.19249e-08, -1, 0, 1, 1.19249e-08, 0, 0, 0)
+skeleton = NodePath("../../..")
+
+[node name="finPos" type="Marker3D" parent="Camera3D"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="dice" parent="." instance=ExtResource("2_h2ix6")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.686163, 0)

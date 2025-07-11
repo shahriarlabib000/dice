@@ -1,0 +1,19 @@
+[gd_scene load_steps=6 format=3 uid="uid://cg3taamwxkxi"]
+
+[ext_resource type="Texture2D" uid="uid://ckql0plp4irgo" path="res://job_application.jpeg" id="1_niq2c"]
+[ext_resource type="Script" uid="uid://mhwi3nhd6xre" path="res://job_application.gd" id="2_jbef2"]
+[ext_resource type="AudioStream" uid="uid://rny8drnmw1n0" path="res://scare.wav" id="3_vplbj"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_ne7y1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jbef2"]
+albedo_texture = ExtResource("1_niq2c")
+
+[node name="job_application" type="MeshInstance3D"]
+visible = false
+mesh = SubResource("QuadMesh_ne7y1")
+surface_material_override/0 = SubResource("StandardMaterial3D_jbef2")
+script = ExtResource("2_jbef2")
+
+[node name="scare" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_vplbj")
